@@ -21,18 +21,19 @@
 
 
 module recon#(parameter WIDTH = 15)(
-input clk,reset,m,
+input clk,reset,m,div,
 input [WIDTH:0] Xo, Yo ,Zo,
-output [WIDTH:0] Xout , Yout , Zout
+output [WIDTH:0] Xout , Yout , Zout,
+output [3:0] i
 );
 
 
 wire selmx,selmy,selmz;
-wire [3:0]  i ;
+//wire [3:0]  i ;
 wire [WIDTH:0] rom_out ;
 
 
-recon_datapath dt(clk,m,Xo,Yo,Zo,selmx, selmy,selmz,Xout, Yout, Zout ,rom_out, i);
+recon_datapath dt(clk,m,div,Xo,Yo,Zo,selmx, selmy,selmz,Xout, Yout, Zout ,rom_out, i);
 recon_controlpath ct(clk,reset,selmx,selmy,selmz,i);
 rom rm(clk,m,i,rom_out);
 

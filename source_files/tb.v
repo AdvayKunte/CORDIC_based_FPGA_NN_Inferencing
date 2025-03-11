@@ -1,99 +1,63 @@
 `timescale 1ns / 1ps
 
-module recon_tb;
+module recon_top_level_tb;
 
-    // Parameters
     parameter WIDTH = 15;
-
-    // Inputs
-    reg clk;
-    reg reset;
-    reg m;
     reg [WIDTH:0] Xo, Yo, Zo;
+    reg clk;
+    reg ext_reset;
+    reg [1:0] sel;
+    wire [WIDTH:0] z;
 
-    // Outputs
-    wire [WIDTH:0] Xout, Yout, Zout;
-
-    // Instantiate the Unit Under Test (UUT)
-    recon #(WIDTH) uut (
-        .clk(clk),
-        .reset(reset),
-        .m(m),
+    // Instantiate the DUT (Design Under Test)
+    recon_top_level #(WIDTH) dut (
         .Xo(Xo),
         .Yo(Yo),
         .Zo(Zo),
-        .Xout(Xout),
-        .Yout(Yout),
-        .Zout(Zout)
+        .clk(clk),
+        .ext_reset(ext_reset),
+        .sel(sel),
+        .z(z)
     );
 
-    // Clock generation
-    always begin
-        #5 clk = ~clk; // 10 ns clock period
-    end
-
+    // Clock Generation
     initial begin
-        // Initialize inputs
         clk = 0;
-        reset = 1;
-        m = 0;
-        Xo = 0;
-        Yo = 0;
-        Zo = 0;
-
- Xo = 9'b000000000; Yo = 9'b000000000; Zo = 9'b000000000; m = 0;
-
-        // Apply reset
-        #15 reset = 0;
-
-        // Test case 1: Apply inputs
-       
-
-        // Wait for some cycles
-        #100;
-        reset = 1; 
-        # 20 reset = 0;
-Xo = 16'b0000010011010100; Yo = 16'b0000000000000000; Zo = 16'b0000001100100000; m = 1;
-
-//0.68750	0000001011000000
-//0.18750	0000000011000000
-//0.90625	0000001110100000
-
-//0.25	0000000100000000
-//1.325	0000010101001101
-//0.9424	0000001111000101
-
-//0.32	0000000101001000
-//0.645	0000001010010100
-//3.14	0000110010001111
-
-#200
-//reset = 1;
-//#20 reset = 0;
-//Xo = 9'b001111000; Yo = 9'b001000100; Zo = 9'b111111110; m = 0;
-        // Test case 2: Change inputs
-  //      #10 Xo = 9'b0011110000; Yo = 9'b0010101010; Zo = 9'b0001010101; m = 0;
-
-        // Wait for some cycles
-       // #100;
-
-        // Test case 3: Apply reset again
-//        #10 reset = 1;
-//        #10 reset = 0;
-
-        // Final test case
-   //     #10 Xo = 9'b0001010101; Yo = 9'b0000110011; Zo = 9'b0011001100; m = 0;
-
-        // Wait for some cycles
- //       #50;
-
-        // End simulation
-        $stop;
+        forever #5 clk = ~clk; // 100MHz clock
     end
 
+    // Stimulus Process
     initial begin
-        $monitor("Time = %0t | reset = %b | m = %b | Xo = %b | Yo = %b | Zo = %b | Xout = %b | Yout = %b | Zout = %b", 
-                  $time, reset, m, Xo, Yo, Zo, Xout, Yout, Zout);
+        // Initialize signals
+        ext_reset = 1; // Active high reset
+        Xo = 16'b0000001100000000; // +0.75
+        Yo = 16'b0000000100000000; // +0.25
+        Zo = 16'b0000000111000101;
+        sel = 2'b00;
+
+        #10; // Allow some time before deasserting reset
+        ext_reset = 0;
+
+        // Test Case
+        #350;
+        ext_reset = 1; // Active high reset
+        Xo = 16'b0000000010000000; // +0.125
+        Yo = 16'b0000000000011101; // -0.625
+        Zo = 16'b0000001000000000; //0.5
+        sel = 2'b00;
+        #10
+        ext_reset = 0;
+        #400
+        // Finish Simulation
+        $finish;
+    end
+
+    // Monitor outputs
+    initial begin
+        $monitor("Time = %0t | Xo = %d | Yo = %d | Zo = %d | sel = %b | z = %d",
+                 $time, Xo, Yo, Zo, sel, z);
     end
 
 endmodule
+
+

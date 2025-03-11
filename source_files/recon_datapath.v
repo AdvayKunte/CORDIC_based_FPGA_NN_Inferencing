@@ -22,7 +22,7 @@
 
 module recon_datapath#(parameter WIDTH = 15)(
 input clk,
-input m,
+input m,div,
 input [WIDTH:0] Xo,Yo,Zo ,
 //input xout_sel,
 input selmx,selmy,selmz,
@@ -42,7 +42,7 @@ mux m_z(Zo , Zout , selmz , z_mux);
 reg [WIDTH:0] Xi , Yi , Zi;
 //reg di;
 
-wire di = z_mux[15];
+wire di = div?(~y_mux[15]):z_mux[15];
 
 //assign Xout = x_fout;
 //assign Yout = y_asout;
