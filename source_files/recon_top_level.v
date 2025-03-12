@@ -61,7 +61,7 @@ wire [WIDTH:0] X_divout,Y_divout;
 wire complete ;
 
 recon #(WIDTH) r_div(
- clk,reset3,1'b1,1'b1,
+ clk,reset3,1'b0,1'b1,
 divisor, dividend ,16'b0,
  X_divout , Y_divout , div_out
 );
