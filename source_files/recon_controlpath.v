@@ -27,11 +27,11 @@ output reg [3:0]  i
 );
 
 reg start;
-initial begin
+//initial begin
 
-    start = 0;
+//    start = 0;
 
-end
+//end
 
 always @ (posedge clk) begin
     if(reset) begin 
