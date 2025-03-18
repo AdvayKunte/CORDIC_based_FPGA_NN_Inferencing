@@ -22,11 +22,25 @@
 
 
 module shifter#(parameter WIDTH = 15)(
-input [WIDTH:0] a,
-output [WIDTH:0] b,
+input signed [WIDTH:0] a,
+output signed [WIDTH:0] b,
 input m , 
 input [3:0] i
 );
-assign b= m?a>>i:((i!=0)?a>>(i-1):a);
+
+
+//wire [WIDTH-1:0] b_intm ;
+//always @ (posedge clk) begin
+//    if(a[15]) begin
+//        b[15] = 1;
+//        for(j = 0; j < 15 ;j = j+1) begin
+//            b[j] = b[j+1]
+//        end
+//    end
+//end
+assign b = m? (a)>>>i :((i!=0)?(a)>>>(i-1):a);
+//assign b = {a[WIDTH],b_intm};
+
+
 endmodule
 

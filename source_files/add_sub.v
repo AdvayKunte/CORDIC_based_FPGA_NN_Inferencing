@@ -21,9 +21,13 @@
 
 
 module add_sub #(parameter WIDTH = 15)(
-input [WIDTH:0] a,b,
+input signed [WIDTH:0] a,b,
 input sel, 
-output [WIDTH:0] out
+output signed [WIDTH:0] out
 );
-assign out = sel?a-b:a+b;
+
+wire [WIDTH+1:0] sum;
+assign sum = sel?a-b:a+b;
+assign out = {sum[WIDTH+1],sum[WIDTH-1:0]};
+
 endmodule
