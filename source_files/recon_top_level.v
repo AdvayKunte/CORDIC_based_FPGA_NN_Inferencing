@@ -25,12 +25,14 @@ input [WIDTH:0] Xo, Yo , Zo,
 input clk,
 input ext_reset,
 input [1:0] sel,
-output [WIDTH:0] z
+output [WIDTH:0] z,
+output [WIDTH:0] mac_out,
+input af_en
 );
     
 wire reset3;    
-    
-Neuron #(WIDTH)inneuron(Xo,Yo,Zo,clk,ext_reset, sinhz,coshz,z,reset3,complete);
+
+Neuron #(WIDTH)inneuron(Xo,Yo,Zo,clk,ext_reset, sinhz,coshz,z,reset3,complete,mac_out,af_en);
 wire [WIDTH:0] z, coshz, sinhz;
 wire [1:0] sel;
 wire [WIDTH:0]f;
@@ -72,5 +74,3 @@ assign f=complete?(sel[1]?relu:div_out):15'bx;
   
 
 endmodule
-
-
