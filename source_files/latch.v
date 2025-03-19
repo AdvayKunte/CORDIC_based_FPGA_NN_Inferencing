@@ -24,7 +24,8 @@ module latch#(parameter WIDTH=15)(
 input [WIDTH:0] Xout,Yout,Zout,
 input [3:0] i,
 input clk,reset,
-output reg [WIDTH:0] X_H,Y_H,Z_H );
+output reg [WIDTH:0] X_H,Y_H,Z_H,
+input af_en);
 
 always@(posedge clk) begin
     if(reset) begin
@@ -32,7 +33,7 @@ always@(posedge clk) begin
         Y_H<=16'b0;
         Z_H<=16'b0;
     end
-    else if(i==10)begin
+    else if(i==10&af_en)begin
         X_H<=16'b0000010011010100;
         Y_H<=16'b0;
         Z_H<=Yout;
