@@ -49,11 +49,21 @@ if(start) begin
     weight_en = 1;
     bias_en = 1;
     tot_complete = 0;
+    compute_en  =0;
+    af_en =0;
 end
 
 case(state) 
     2'b00:  begin
-            if(clk_iterations == nl1) begin
+                  weight_en = 1;
+                   bias_en = 1;
+              if(i==0) begin
+                    bias_sel = 0;
+                end
+                else begin
+                    bias_sel =1 ;
+                end
+            if(clk_iterations == (nl1+1)) begin
                 weight_en = 0;
                 bias_en = 0;
                 compute_en =0 ;
@@ -69,40 +79,43 @@ case(state)
             end 
     end
     2'b01:  begin
+            compute_en = 1;
             if(i != (nl1-1)) begin
                 if(clk_iterations == 0) begin
-                    compute_en = 1;
+                    
                     af_en = 0;
                 end
                 if(clk_iterations == 10) begin 
                     compute_en = 0;
                     af_en = 0;    
                     state = 0;
+                   weight_en = 1;
+                   bias_en = 1;
                     i = i+1;
                     clk_iterations = 0;
                 end
-                if(i==0) begin
-                    bias_sel = 0;
-                end
-                else begin
-                    bias_sel =1 ;
-                end
+
             end
             else if (i == (nl1-1)) begin
-                if(clk_iterations == 0) begin
-                    compute_en = 1;
-                    af_en = 1;
-                end
+//                if(clk_iterations == 0) begin
+//                    compute_en = 1;
+//                    af_en = 1;
+//                end
                 if(clk_iterations == 30) begin 
                     compute_en = 0;
                     af_en = 0;    
                     state = state + 1;
                     clk_iterations = 0;
                 end
+                else begin
+                    compute_en = 1;
+                    af_en = 1;
+                end
             end
     end
     2'b10: begin
         output_wr_en = 1;
+        compute_en = 0;
         output_shft_en = 1;
         n = n+1 ;
         if(n == no_layers) begin 

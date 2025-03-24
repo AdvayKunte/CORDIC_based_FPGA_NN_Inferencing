@@ -21,16 +21,15 @@
 
 
 module recon_top_level#(parameter WIDTH = 15)( 
-input [WIDTH:0] Xo, Yo , Zo,
+input [WIDTH:0] Xo, Zo , Yo,
 input clk,
 input ext_reset,
 input [1:0] sel,
-output [WIDTH:0] z,
 output [WIDTH:0] mac_out,
+output [WIDTH:0] z,
 input af_en
 );
-    
-wire reset3;    
+  
 
 Neuron #(WIDTH)inneuron(Xo,Yo,Zo,clk,ext_reset, sinhz,coshz,z,reset3,complete,mac_out,af_en);
 wire [WIDTH:0] z, coshz, sinhz;
