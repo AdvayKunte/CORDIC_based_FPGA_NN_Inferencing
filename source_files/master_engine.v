@@ -63,7 +63,7 @@ wire [15:0] neuron_input = output_sig?output_bank[0]:inputs[i] ;
 //reg [5:0] n_layers ;           // No. of layers
 //reg [5:0] nl1,nl2,nl3,nl4,nl5; //No. of neurons in each layer
 
-wire [63:0] compute_out [15:0] ;
+wire [15:0] compute_out [63:0] ;
 assign cnos[0]=nl1;
 assign cnos[1]=nl2;
 assign cnos[2]=nl3;
@@ -74,7 +74,7 @@ assign cnos[4]=nl5;
 master_controlpath cntrl(
 clk , start,no_layers ,cnos[0],cnos[1],cnos[2],cnos[3],cnos[4],
 weight_en , bias_en , compute_en , af_en,
-output_shft_en , output_wr_en, output_sig, bias_sign,
+out_shft_en , out_wr_en, output_sig, bias_sign,
 tot_complete , n , i
 );
 

@@ -34,6 +34,20 @@ output reg [5:0] n , i
    
 reg [31:0] clk_iterations;   
     
+wire [5:0]   ninl [4:0] ;
+assign ninl[0]=nl1;
+assign ninl[1]=nl2;
+assign ninl[2]=nl3;
+assign ninl[3]=nl4;
+assign ninl[4]=nl5;  
+
+wire [5:0] na [4:0] ;
+assign na[0] = nl1;
+assign na[1] = nl1;
+assign na[2] = nl2;
+assign na[3] = nl3;
+assign na[4] = nl4;
+    
 reg [1:0] state;
 //reg [5:0] n , i;    
     
@@ -51,36 +65,81 @@ if(start) begin
     tot_complete = 0;
     compute_en  =0;
     af_en =0;
+    output_wr_en = 0;
+    output_shft_en = 0;
 end
 
 case(state) 
     2'b00:  begin
+                 if(output_shft_en) begin
+                    output_shft_en = 0;
+                 end
                   weight_en = 1;
                    bias_en = 1;
+                   
               if(i==0) begin
                     bias_sel = 0;
                 end
                 else begin
                     bias_sel =1 ;
+                    if(n != 0) begin 
+                        output_shft_en = 1;
+                    end
                 end
-            if(clk_iterations == (nl1+1)) begin
-                weight_en = 0;
-                bias_en = 0;
-                compute_en =0 ;
-                af_en = 0;
-                state = state + 1;
-                clk_iterations = 0;
-                if(n == 0) begin 
-                    output_sel = 0;
+            if(ninl[n] != 1) begin
+                if(clk_iterations == (ninl[n]+1)) begin
+                    weight_en = 0;
+                    bias_en = 0;
+                    compute_en =0 ;
+                    af_en = 0;
+                    state = state + 1;
+                    clk_iterations = 0;
+                    if(n == 0) begin 
+                        output_sel = 0;
+                    end
+                    else if (n !=0) begin
+                        output_sel = 1;
+                    end
+                end 
+            end
+            else  begin
+                if(i!=0) begin
+                if(clk_iterations == (ninl[n]+1)) begin
+                    weight_en = 0;
+                    bias_en = 0;
+                    compute_en =0 ;
+                    af_en = 0;
+                    state = state + 1;
+                    clk_iterations = 0;
+                    if(n == 0) begin 
+                        output_sel = 0;
+                    end
+                    else if (n !=0) begin
+                        output_sel = 1;
+                    end
+                end 
                 end
-                else if (n !=0) begin
-                    output_sel = 1;
+                else begin
+                   if(clk_iterations == (ninl[n]+2)) begin
+                    weight_en = 0;
+                    bias_en = 0;
+                    compute_en =0 ;
+                    af_en = 0;
+                    state = state + 1;
+                    clk_iterations = 0;
+                    if(n == 0) begin 
+                        output_sel = 0;
+                    end
+                    else if (n !=0) begin
+                        output_sel = 1;
+                    end
+                end  
                 end
             end 
     end
     2'b01:  begin
             compute_en = 1;
-            if(i != (nl1-1)) begin
+            if(i != (na[n]-1)) begin
                 if(clk_iterations == 0) begin
                     
                     af_en = 0;
@@ -96,16 +155,17 @@ case(state)
                 end
 
             end
-            else if (i == (nl1-1)) begin
+            else if (i == (na[n]-1)) begin
 //                if(clk_iterations == 0) begin
 //                    compute_en = 1;
 //                    af_en = 1;
 //                end
-                if(clk_iterations == 30) begin 
+                if(clk_iterations == 32) begin 
                     compute_en = 0;
                     af_en = 0;    
                     state = state + 1;
                     clk_iterations = 0;
+                    output_wr_en = 1;
                 end
                 else begin
                     compute_en = 1;
@@ -114,13 +174,21 @@ case(state)
             end
     end
     2'b10: begin
-        output_wr_en = 1;
+        if(output_wr_en) begin
+            output_wr_en =0;
+        end
         compute_en = 0;
-        output_shft_en = 1;
+ //       output_shft_en = 1;
         n = n+1 ;
         if(n == no_layers) begin 
             state = state + 1;
         end 
+        else begin
+            state=0;  
+            i =0;  
+            weight_en = 1;
+            bias_en = 1;    
+        end
     end
     2'b11: begin
         tot_complete = 1;

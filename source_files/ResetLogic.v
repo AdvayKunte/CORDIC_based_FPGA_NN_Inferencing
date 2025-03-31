@@ -49,7 +49,7 @@ always@(posedge clk)begin
         reset3 = 0;
         counter = counter + 1;
     end
-    else if(counter ==31) begin
+    else if(counter ==30) begin
         complete = 1;
     end
     else if(counter <31) begin 

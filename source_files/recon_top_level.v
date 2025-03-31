@@ -26,7 +26,7 @@ input clk,
 input ext_reset,
 input [1:0] sel,
 output [WIDTH:0] mac_out,
-output [WIDTH:0] z,
+output [WIDTH:0] f,
 input af_en
 );
   
@@ -34,7 +34,7 @@ input af_en
 Neuron #(WIDTH)inneuron(Xo,Yo,Zo,clk,ext_reset, sinhz,coshz,z,reset3,complete,mac_out,af_en);
 wire [WIDTH:0] z, coshz, sinhz;
 wire [1:0] sel;
-wire [WIDTH:0]f;
+//wire [WIDTH:0]f;
 wire sign_z=z[WIDTH];
 wire [WIDTH:0]relu ;
 

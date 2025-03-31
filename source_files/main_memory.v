@@ -37,8 +37,8 @@ initial begin
     weight_storage[3] = 16'b0000000000000000; // 0.000
 
     // Second Input weights 
-    weight_storage[4] = 16'b0000010011001100; // 0.950
-    weight_storage[5] = 16'b0000011000111100; // 0.625
+    weight_storage[4] = 16'b0000000011001100; // 0.950
+    weight_storage[5] = 16'b0000001101111100; // 0.625
     weight_storage[6] = 16'b0000000000000000; // -0.812
     weight_storage[7] = 16'b0000000000000000; // 0.760
     
@@ -59,8 +59,8 @@ initial begin
     //Layer 2 
     
         // First input weights (Layer 1: 0, 1, 2, 3)
-    weight_storage[16] = 16'b1111100000110000; // -0.875
-    weight_storage[17] = 16'b0000000000000000; // 1.000
+    weight_storage[16] = 16'b1111111111100000; // -0.875
+    weight_storage[17] = 16'b0000000011011111; // 1.000
     weight_storage[18] = 16'b0000000000000000; // 2.000
     weight_storage[19] = 16'b0000000000000000; // 3.000
     
@@ -101,7 +101,7 @@ initial begin
     bias_storage[1] = 16'b0000000001011001; // 0.320
     bias_storage[2] = 16'b0000000000000000; // -0.750]
     bias_storage[3] = 16'b0000000000000000; // 0.875
-    bias_storage[4] = 16'b0001010000100000; // 0.320
+    bias_storage[4] = 16'b0000000011100000; // 0.320
     bias_storage[5] = 16'b0000000000000000; // -0.750
 end
         
