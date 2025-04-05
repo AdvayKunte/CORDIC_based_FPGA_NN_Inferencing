@@ -82,9 +82,7 @@ case(state)
                 end
                 else begin
                     bias_sel =1 ;
-                    if(n != 0) begin 
-                        output_shft_en = 1;
-                    end
+
                 end
             if(ninl[n] != 1) begin
                 if(clk_iterations == (ninl[n]+1)) begin
@@ -103,7 +101,7 @@ case(state)
                 end 
             end
             else  begin
-                if(i!=0) begin
+                //if(i!=0) begin
                 if(clk_iterations == (ninl[n]+1)) begin
                     weight_en = 0;
                     bias_en = 0;
@@ -118,23 +116,23 @@ case(state)
                         output_sel = 1;
                     end
                 end 
-                end
-                else begin
-                   if(clk_iterations == (ninl[n]+2)) begin
-                    weight_en = 0;
-                    bias_en = 0;
-                    compute_en =0 ;
-                    af_en = 0;
-                    state = state + 1;
-                    clk_iterations = 0;
-                    if(n == 0) begin 
-                        output_sel = 0;
-                    end
-                    else if (n !=0) begin
-                        output_sel = 1;
-                    end
-                end  
-                end
+               // end
+//                else begin
+//                   if(clk_iterations == (ninl[n]+2)) begin
+//                    weight_en = 0;
+//                    bias_en = 0;
+//                    compute_en =0 ;
+//                    af_en = 0;
+//                    state = state + 1;
+//                    clk_iterations = 0;
+//                    if(n == 0) begin 
+//                        output_sel = 0;
+//                    end
+//                    else if (n !=0) begin
+//                        output_sel = 1;
+//                    end
+//                end  
+//                end
             end 
     end
     2'b01:  begin
@@ -146,7 +144,10 @@ case(state)
                 end
                 if(clk_iterations == 10) begin 
                     compute_en = 0;
-                    af_en = 0;    
+                    af_en = 0;   
+                    if(n != 0) begin 
+                        output_shft_en = 1;
+                    end 
                     state = 0;
                    weight_en = 1;
                    bias_en = 1;
@@ -184,7 +185,8 @@ case(state)
             state = state + 1;
         end 
         else begin
-            state=0;  
+            state=0; 
+            clk_iterations = 0; 
             i =0;  
             weight_en = 1;
             bias_en = 1;    

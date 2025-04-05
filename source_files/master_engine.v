@@ -31,9 +31,9 @@ output [5:0] n , i
 
 reg [15:0] inputs [0:3];
 initial begin 
-inputs[0] = 16'b0000000001000000;
-inputs[1] = 16'b00000000100000000;
-inputs[2] =  16'b00000000000000000;
+inputs[0] = 16'b0000000010000011; //0.128
+inputs[1] = 16'b0000001001000010;//0.565
+inputs[2] = 16'b1111111011111101;//-0.253
 inputs[3] = 16'b00000000000000000;
 end
 
@@ -163,15 +163,15 @@ always @ (posedge clk) begin
 //                weight_en = 0;
 //            end
 //            else begin
-            weight_bank[k] = weight_bank[k-1] ;
+            weight_bank[k] <= weight_bank[k-1] ;
            // end
         end
-               weight_bank[0] = wt_in ; 
+               weight_bank[0] <= wt_in ; 
       end
     if(bias_main == 2'b10) begin
 
         for(k =1 ; k <cnos[n] ; k= k+1 ) begin
-            bias_bank[k] = bias_bank[k-1] ;
+            bias_bank[k] <= bias_bank[k-1] ;
         end
         bias_bank[0] = bias_in ; 
     end
@@ -200,7 +200,7 @@ wire [15:0] b = bias_input[0] ;
 
 recon_top_level cu0 (neuron_input, weight_bank[0], bias_bank[0] ,  clk, reset, af_nos[n], mac_output[0], compute_out[0], af_en);
 recon_top_level cu1 (neuron_input, weight_bank[1], bias_bank[1], clk, reset, af_nos[n], mac_output[1], compute_out[1],af_en);
-recon_top_level cu2 (neuron_input, weight_bank[2], bias_bank[2], clk, reset, af_nos[n], mac_output[2], compute_out[2]);
+recon_top_level cu2 (neuron_input, weight_bank[2], bias_bank[2], clk, reset, af_nos[n], mac_output[2], compute_out[2],af_en);
 recon_top_level cu3 (neuron_input, weight_bank[3], bias_bank[3], clk, reset, af_nos[n], mac_output[3], compute_out[3]);
 recon_top_level cu4 (neuron_input, weight_bank[4], bias_bank[4], clk, reset, af_nos[n], mac_output[4], compute_out[4]);
 recon_top_level cu5 (neuron_input, weight_bank[5], bias_bank[5], clk, reset, af_nos[n], mac_output[5], compute_out[5]);

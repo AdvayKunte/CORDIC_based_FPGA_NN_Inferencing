@@ -31,12 +31,12 @@ module final_destination_tb;
         // Initialize inputs
         clk = 0;
         start = 0;
-        no_layers = 6'b000011; // 2 layers
-        nl1 = 6'b000011;      // 2 neurons in layer 1
-        nl2 = 6'b000010;      // 1 neuron in layer 2
-        nl3 = 6'b000001;      // 0 neurons in layer 3
-        nl4 = 6'b000000;      // 0 neurons in layer 4
-        nl5 = 6'b000000;      // 0 neurons in layer 5
+        no_layers = 6'b000011; // 3 layers
+        nl1 = 6'b000100;      // 3 neurons in layer 1
+        nl2 = 6'b000010;      // 2 neuron in layer 2
+        nl3 = 6'b000011;      // 1 neurons in layer 3
+        nl4 = 6'b000010;      // 0 neurons in layer 4
+        nl5 = 6'b000001;      // 0 neurons in layer 5
 
         afl1 = 2'b00;
         afl2 = 2'b00;
