@@ -34,7 +34,7 @@ initial begin
 inputs[0] = 16'b0000000010000011; //0.128
 inputs[1] = 16'b0000001001000010;//0.565
 inputs[2] = 16'b1111111011111101;//-0.253
-inputs[3] = 16'b00000000000000000;
+inputs[3] = 16'b0000001011000011;
 end
 
     
@@ -201,8 +201,8 @@ wire [15:0] b = bias_input[0] ;
 recon_top_level cu0 (neuron_input, weight_bank[0], bias_bank[0] ,  clk, reset, af_nos[n], mac_output[0], compute_out[0], af_en);
 recon_top_level cu1 (neuron_input, weight_bank[1], bias_bank[1], clk, reset, af_nos[n], mac_output[1], compute_out[1],af_en);
 recon_top_level cu2 (neuron_input, weight_bank[2], bias_bank[2], clk, reset, af_nos[n], mac_output[2], compute_out[2],af_en);
-recon_top_level cu3 (neuron_input, weight_bank[3], bias_bank[3], clk, reset, af_nos[n], mac_output[3], compute_out[3]);
-recon_top_level cu4 (neuron_input, weight_bank[4], bias_bank[4], clk, reset, af_nos[n], mac_output[4], compute_out[4]);
+recon_top_level cu3 (neuron_input, weight_bank[3], bias_bank[3], clk, reset, af_nos[n], mac_output[3], compute_out[3],af_en);
+recon_top_level cu4 (neuron_input, weight_bank[4], bias_bank[4], clk, reset, af_nos[n], mac_output[4], compute_out[4],af_en);
 recon_top_level cu5 (neuron_input, weight_bank[5], bias_bank[5], clk, reset, af_nos[n], mac_output[5], compute_out[5]);
 recon_top_level cu6 (neuron_input, weight_bank[6], bias_bank[6], clk, reset, af_nos[n], mac_output[6], compute_out[6]);
 recon_top_level cu7 (neuron_input, weight_bank[7], bias_bank[7], clk, reset, af_nos[n], mac_output[7], compute_out[7]);

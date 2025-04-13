@@ -181,7 +181,7 @@ case(state)
         compute_en = 0;
  //       output_shft_en = 1;
         n = n+1 ;
-        if(n == no_layers) begin 
+        if(n == no_layers+1) begin 
             state = state + 1;
         end 
         else begin

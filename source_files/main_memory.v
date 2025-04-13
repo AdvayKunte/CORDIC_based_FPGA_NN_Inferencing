@@ -29,7 +29,7 @@ input [5:0] nl1,nl2,nl3,nl4,nl5
         
         
      
-initial begin
+//initial begin
 
 //    //Layer 1
 
@@ -113,20 +113,42 @@ initial begin
 
 
     // Bias values
-    bias_storage[0] = 16'b0000000000000000; //0
-    bias_storage[1] = 16'b0000000000000000; // 0
-    bias_storage[2] = 16'b0000000000000000; // 0
-    bias_storage[3] = 16'b0000000000000000; // 0
-    bias_storage[4] = 16'b0000000011111110; // 0.124
-    bias_storage[5] = 16'b0000000111111000; // 0.493
-    bias_storage[6] = 16'b0000000000000000; // 0
-    bias_storage[7] = 16'b0000000000000000; // 0
-    bias_storage[8] = 16'b1111111010100011; // -0.341
-end
+//    bias_storage[0] = 16'b0000000000000000; //0
+//    bias_storage[1] = 16'b0000000000000000; // 0
+//    bias_storage[2] = 16'b0000000000000000; // 0
+//    bias_storage[3] = 16'b0000000000000000; // 0
+//    bias_storage[4] = 16'b0000000011111110; // 0.124
+//    bias_storage[5] = 16'b0000000111111000; // 0.493
+//    bias_storage[6] = 16'b0000000000000000; // 0
+//    bias_storage[7] = 16'b0000000000000000; // 0
+//    bias_storage[8] = 16'b1111111010100011; // -0.341
+//    bias_storage[9] = 16'b0000000000000000; //0
+//    bias_storage[10] = 16'b0000000000000000; // 0
+//    bias_storage[11] = 16'b0000000000000000; // 0
+//    bias_storage[12] = 16'b0000000000000000; // 0
+//    bias_storage[13] = 16'b0000000011111110; // 0.124
+//    bias_storage[14] = 16'b0000000111111000; // 0.493
+//    bias_storage[15] = 16'b0000000000000000; // 0
+//    bias_storage[16] = 16'b0000000000000000; // 0
+//    bias_storage[17] = 16'b1111111010100011; // -0.341
+//    bias_storage[18] = 16'b0000000000000000; // 0
+//    bias_storage[19] = 16'b0000000000000000; // 0
+//end
 
 initial begin
-    $readmemb("C:/NewNewRecon/NewNewRecon.srcs/sources_1/new/fixed_point_random.mem", weight_storage);
-  end        
+    $readmemb("C:/Users/Advay/OneDrive/Documents/Advay/project_1/project_1.srcs/sources_1/new/fixed_point_random.mem", weight_storage);
+  end 
+  
+initial begin
+    $readmemb("C:/Users/Advay/OneDrive/Documents/Advay/project_1/project_1.srcs/sources_1/new/biasbank.mem",bias_storage );
+end        
+
+wire [5:0]   ninl [4:0] ;
+assign ninl[0]=nl1;
+assign ninl[1]=nl2;
+assign ninl[2]=nl3;
+assign ninl[3]=nl4;
+assign ninl[4]=nl5;
         
  wire [5:0] na [4:0] ;
 assign na[0] = nl1;
@@ -140,7 +162,7 @@ reg [15:0] bias_storage [0:20];
 reg [1:0] k;    
     
 wire [6:0] weight_addr = (n==0)?{n[2:0] , i[1:0] , k}: {n[2:0], (na[n][1:0]-i[1:0]-2'b01) , k};   
-wire [4:0] bias_addr = {n[2:0] , k}; 
+wire [4:0] bias_addr = (n==0)?{n[2:0] , k}:{n[2:0] , ninl[n][1:0]-k-2'b01}; 
     
 initial begin
     k = 0;
