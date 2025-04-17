@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module recon_top_level#(parameter WIDTH = 15)( 
+(* dont_touch = "true" *)module recon_top_level#(parameter WIDTH = 15)( 
 input [WIDTH:0] Xo, Zo , Yo,
 input clk,
 input ext_reset,

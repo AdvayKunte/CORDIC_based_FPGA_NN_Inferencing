@@ -4,7 +4,7 @@ module final_destination_tb;
 
     // Inputs
     reg clk, start;
-    reg [5:0] no_layers, nl1, nl2, nl3, nl4, nl5;
+    reg [5:0] no_layers, nl1, nl2, nl3, nl4, nl5, n_in;
     reg [1:0] afl1, afl2, afl3, afl4, afl5;
 
     // Instantiate the Unit Under Test (UUT)
@@ -17,6 +17,7 @@ module final_destination_tb;
         .nl3(nl3),
         .nl4(nl4),
         .nl5(nl5),
+        .n_in(n_in),
         .afl1(afl1),
         .afl2(afl2),
         .afl3(afl3),
@@ -31,12 +32,13 @@ module final_destination_tb;
         // Initialize inputs
         clk = 0;
         start = 0;
-        no_layers = 6'b000010; // 2 layers
+        no_layers = 6'b000011; // 3 layers
         nl1 = 6'b000010;      // 2 neurons in layer 1
-        nl2 = 6'b000001;      // 1 neuron in layer 2
-        nl3 = 6'b000000;      // 0 neurons in layer 3
+        nl2 = 6'b000011;      // 3 neuron in layer 2
+        nl3 = 6'b000010;      // 2 neurons in layer 3
         nl4 = 6'b000000;      // 0 neurons in layer 4
         nl5 = 6'b000000;      // 0 neurons in layer 5
+        n_in =6'b000010;       //Number of Input dimensions
 
         afl1 = 2'b00;
         afl2 = 2'b00;
@@ -45,9 +47,9 @@ module final_destination_tb;
         afl5 = 2'b00;
 
         // Apply start signal after some delay
-        #20;
+        #27;
         start = 1;
-        #10;
+        #15;
         start = 0;
 
         // Wait for completion or further verification steps
