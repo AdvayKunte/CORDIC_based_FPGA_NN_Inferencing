@@ -23,10 +23,12 @@
 module master_controlpath(
 input clk , start,
 input [5:0] no_layers ,nl1,nl2,nl3,nl4,nl5,
+input [9:0] n_in,
 output reg weight_en , bias_en , compute_en , af_en,
 output reg output_shft_en , output_wr_en, output_sel, bias_sel,
 output reg tot_complete,
-output reg [5:0] n , i
+output reg [5:0] n ,
+output reg [9:0] i
 );
 
 //wire [1:0] af_sel;      //Control Signals
@@ -35,18 +37,18 @@ output reg [5:0] n , i
 reg [31:0] clk_iterations;   
     
 wire [5:0]   ninl [4:0] ;
-assign ninl[0]=nl1;
+assign ninl[0]=nl1 ;
 assign ninl[1]=nl2;
 assign ninl[2]=nl3;
 assign ninl[3]=nl4;
 assign ninl[4]=nl5;  
 
-wire [5:0] na [4:0] ;
-assign na[0] = nl1;
-assign na[1] = nl1;
-assign na[2] = nl2;
-assign na[3] = nl3;
-assign na[4] = nl4;
+wire [9:0] na [4:0];
+assign na[0] = n_in;
+assign na[1] =( nl1==6'b111111)?(10'b0001000000):{4'b0,nl1};
+assign na[2] = ( nl2==6'b111111)?(10'b0001000000):{4'b0,nl2};
+assign na[3] = ( nl3==6'b111111)?(10'b0001000000):{4'b0,nl3};
+assign na[4] =( nl4==6'b111111)?(10'b0001000000):{4'b0,nl4}; 
     
 reg [1:0] state;
 //reg [5:0] n , i;    
@@ -60,8 +62,8 @@ if(start) begin
     clk_iterations = 0; 
     n =0; 
     i = 0;
-    weight_en = 1;
-    bias_en = 1;
+    weight_en = 0;
+    bias_en = 0;
     tot_complete = 0;
     compute_en  =0;
     af_en =0;
@@ -85,7 +87,8 @@ case(state)
 
                 end
             if(ninl[n] != 1) begin
-                if(clk_iterations == (ninl[n]+1)) begin
+                if(ninl[n]!=6'b111111) begin
+                if(clk_iterations == (ninl[n]+3)) begin
                     weight_en = 0;
                     bias_en = 0;
                     compute_en =0 ;
@@ -99,6 +102,23 @@ case(state)
                         output_sel = 1;
                     end
                 end 
+                end
+                else begin
+                if(clk_iterations == (ninl[n]+4)) begin
+                    weight_en = 0;
+                    bias_en = 0;
+                    compute_en =0 ;
+                    af_en = 0;
+                    state = state + 1;
+                    clk_iterations = 0;
+                    if(n == 0) begin 
+                        output_sel = 0;
+                    end
+                    else if (n !=0) begin
+                        output_sel = 1;
+                    end
+                end 
+                end
             end
             else  begin
                 //if(i!=0) begin
@@ -116,23 +136,6 @@ case(state)
                         output_sel = 1;
                     end
                 end 
-               // end
-//                else begin
-//                   if(clk_iterations == (ninl[n]+2)) begin
-//                    weight_en = 0;
-//                    bias_en = 0;
-//                    compute_en =0 ;
-//                    af_en = 0;
-//                    state = state + 1;
-//                    clk_iterations = 0;
-//                    if(n == 0) begin 
-//                        output_sel = 0;
-//                    end
-//                    else if (n !=0) begin
-//                        output_sel = 1;
-//                    end
-//                end  
-//                end
             end 
     end
     2'b01:  begin
@@ -157,10 +160,6 @@ case(state)
 
             end
             else if (i == (na[n]-1)) begin
-//                if(clk_iterations == 0) begin
-//                    compute_en = 1;
-//                    af_en = 1;
-//                end
                 if(clk_iterations == 32) begin 
                     compute_en = 0;
                     af_en = 0;    
@@ -179,7 +178,6 @@ case(state)
             output_wr_en =0;
         end
         compute_en = 0;
- //       output_shft_en = 1;
         n = n+1 ;
         if(n == no_layers+1) begin 
             state = state + 1;

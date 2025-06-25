@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module recon_top_level#(parameter WIDTH = 15)( 
+(* dont_touch = "true" *)module recon_top_level#(parameter WIDTH = 15)( 
 input [WIDTH:0] Xo, Zo , Yo,
 input clk,
 input ext_reset,
@@ -33,7 +33,7 @@ input af_en
 
 Neuron #(WIDTH)inneuron(Xo,Yo,Zo,clk,ext_reset, sinhz,coshz,z,reset3,complete,mac_out,af_en);
 wire [WIDTH:0] z, coshz, sinhz;
-wire [1:0] sel;
+//wire [1:0] sel;
 //wire [WIDTH:0]f;
 wire sign_z=z[WIDTH];
 wire [WIDTH:0]relu ;
@@ -69,7 +69,9 @@ divisor, dividend ,16'b0,
  
 
 //final selection between sigmoid(00), tanh(01) and relu(10)
-assign f=complete?(sel[1]?relu:div_out):15'bx;
+//assign f=complete?(sel[1]?relu:div_out):15'bx;
+  
+assign f=complete?(sel[1]?(sel[0]?mac_out:relu):div_out):15'bx;  
   
 
 endmodule
