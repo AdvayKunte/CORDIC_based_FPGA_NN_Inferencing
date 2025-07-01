@@ -1,5 +1,6 @@
 <h1>Neural Network Inferencing using CORDIC Algorithm based computing unit on FPGA </h1>
 The Given Repository Contains two major components -:
+
 1) ReCON block , which is a multiply-accumalate unit , suited for vectors' scalar multiplication. It is based on the iterative CORDIC Alogirthm Approach , with a datapath consisting of adders , shifters and registers and controlpath carrying out iterations (n =10) for achieving certain accuracy in results.
 Cordic Algorithm not only computed Multiply Accumate but also computes the activation function using hyperbolic mode , which include sigmoid , tanh and ReLU 
 The binary representation of the numbers is 16 bit signed fixed point representation with 5 integer bits and 10 decimal bits. Thereby word size is 16 bits.
