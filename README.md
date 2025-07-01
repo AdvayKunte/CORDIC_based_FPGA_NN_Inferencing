@@ -16,7 +16,9 @@ The binary representation of the numbers is 16 bit signed fixed point representa
    5) Finally entire layer computation done and stored in the output bank, and then this output bank loaded parallelly for all the outputs
    6) Output bank now serially gives each dimension as input for the neural network (NOTE -: This is a fully connected neural network)
    7) Finally once all the layers done , output bank stores final output as desired
+      
    NOTE-: Output Bank connected using VIVADO ILA Probes (IP) to check output bank value
+   
    NOTE-: Python Code for exrtracting weights/biases out of neural network and storing it in .coe file and loaded in BRAM
   
       
