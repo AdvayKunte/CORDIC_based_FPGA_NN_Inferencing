@@ -11,6 +11,9 @@ where mac_out=(Xo*Zo)+Yo and f=sigmoid(mac_out)
 
 5)For Relu
 ![image](https://github.com/user-attachments/assets/1b8af2cf-4fa7-49d2-98a7-ea6a282965e2)
+
+![image](https://github.com/user-attachments/assets/c4fee3ad-1397-4d01-88f9-3ff69f2a42ea)
+
 f=Relu(mac_out)
 
 
