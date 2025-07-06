@@ -8,7 +8,8 @@ The binary representation of the numbers is 16 bit signed fixed point representa
 4) For SIGMOID
 ![image](https://github.com/user-attachments/assets/202fe493-4ea1-44bd-918e-5b717c4cfff9)
 where mac_out=(Xo*Zo)+Yo and f=sigmoid(mac_out)
-For Relu
+
+5)For Relu
 ![image](https://github.com/user-attachments/assets/1b8af2cf-4fa7-49d2-98a7-ea6a282965e2)
 
 
