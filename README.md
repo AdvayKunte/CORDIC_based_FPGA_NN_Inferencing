@@ -40,9 +40,12 @@ f=Relu(mac_out)
 
 <h1> INFERENCING MNIST DATASET -:  </h1>
 <img width="733" height="614" alt="Screenshot 2025-07-10 113622" src="https://github.com/user-attachments/assets/6d6a1e9a-4b1c-469f-bfd8-f93bf3fa068e" />
-Simulation Result -:
-<img width="1913" height="1016" alt="Screenshot 2025-07-10 111614" src="https://github.com/user-attachments/assets/d796ae7f-bdef-40e1-8abc-afb35f2cd6fa" />
+
 Implementation on FPGA using ILA Logic Probe-:
 <img width="1906" height="998" alt="Screenshot 2025-07-10 112240" src="https://github.com/user-attachments/assets/3b1ed03d-38c6-4804-9a14-790932e11ea5" />
+
+Simulation Result -:
+<img width="1913" height="1016" alt="Screenshot 2025-07-10 111614" src="https://github.com/user-attachments/assets/d796ae7f-bdef-40e1-8abc-afb35f2cd6fa" />
+
 
 
