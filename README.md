@@ -33,10 +33,12 @@ f=Relu(mac_out)
    NOTE-: Output Bank connected using VIVADO ILA Probes (IP) to check output bank value
    
    NOTE-: Python Code for exrtracting weights/biases out of neural network and storing it in .coe file and loaded in BRAM
-  
-      
 
-INFERENCING MNIST DATASET -: 
+  <h1> IMPLEMENTATION DETAILS </h1>
+<img width="1502" height="667" alt="Screenshot 2025-07-10 105159" src="https://github.com/user-attachments/assets/1de72e41-74de-42e4-af7f-ef1161c39dd6" />
+
+
+<h1> INFERENCING MNIST DATASET -:  </h1>
 <img width="733" height="614" alt="Screenshot 2025-07-10 113622" src="https://github.com/user-attachments/assets/6d6a1e9a-4b1c-469f-bfd8-f93bf3fa068e" />
 Simulation Result -:
 <img width="1913" height="1016" alt="Screenshot 2025-07-10 111614" src="https://github.com/user-attachments/assets/d796ae7f-bdef-40e1-8abc-afb35f2cd6fa" />
